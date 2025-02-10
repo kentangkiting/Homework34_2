@@ -1,35 +1,68 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Button, Form, FormControl } from "react-bootstrap";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [validate, setValidate] = useState(true);
 
+  const onHandleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    console.log(form.checkValidity());
+    if (form.checkValidity() === false) {
+      console.log("invalid");
+      event.stopPropagation();
+      return;
+    }
+    console.log("valid");
+    setValidate(true);
+  };
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <h1>Welcome to Jayjay Login </h1>
+      <Form noValidate validated={validate} onSubmit={onHandleSubmit}>
+        <Form.Group className="mb-3" controlId="formEmail">
+          <Form.Label>Alamat Email</Form.Label>
+          <Form.Control
+            placeholder="Masukan Alamat Email"
+            type="email"
+            required
+          />
+          <Form.Control.Feedback>Email Valid</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">
+            Please insert email properly
+          </Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formPassword">
+          <Form.Label>Alamat Email</Form.Label>
+          <Form.Control
+            placeholder="Masukan Password"
+            type="password"
+            required
+          />
+          <Form.Control.Feedback>Password Valid</Form.Control.Feedback>
+          <Form.Control.Feedback type="invalid">
+            Please insert password
+          </Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formCheck">
+          <Form.Check
+            type="checkbox"
+            label="Ingat Password"
+            required
+            feedback="Harus Ingat Password!"
+            feedbackType="invalid"
+          />
+        </Form.Group>
+        <Button type="submit" variant="primary">
+          Submit
+        </Button>
+      </Form>
+    </div>
+  );
 }
 
-export default App
+export default App;
